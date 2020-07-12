@@ -1,8 +1,9 @@
+import { netBlocVol24, providers } from '@music-metadata/test-audio';
+
 localStorage.debug = 'music-metadata-browser:*';
 import * as Stream from 'stream';
 import * as http from 'stream-http';
 import * as mm from './index';
-import * as testData from '../test/test-data';
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
@@ -114,12 +115,12 @@ describe('Parse Tiuqottigeloot Vol 24 tracks', () => {
 
     describe(`Parser: ${parser.methodDescription}`, () => {
 
-      testData.tracks.forEach(track => {
-        it(`track ${track.metaData.artist} - ${track.metaData.title}`, async () => {
-          const url = testData.providers.netlify.getUrl(track);
+      netBlocVol24.tracks.forEach(track => {
+        it(`track ${track.metadata.artist} - ${track.metadata.title}`, async () => {
+          const url = providers.netlify.getUrl(netBlocVol24.folder, track);
           const metadata = await parser.parseUrl(url);
-          expect(metadata.common.artist).toEqual(track.metaData.artist);
-          expect(metadata.common.title).toEqual(track.metaData.title);
+          expect(metadata.common.artist).toEqual(track.metadata.artist);
+          expect(metadata.common.title).toEqual(track.metadata.title);
         });
       });
     });
